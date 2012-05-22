@@ -6,7 +6,7 @@ namespace :assets do
       Rake::SprocketsTask.new do |t|
         t.environment = Rails2AssetPipeline.env
         t.output = "./public/assets"
-        t.assets = t.environment.paths.map{|p| Dir["#{p.sub(Rails.root.to_s,'')}/**/*"] }.flatten
+        t.assets = t.environment.paths.map{|p| Dir["#{p.sub(Rails.root.to_s,"")}/**/*"] }.flatten
         t.keep = 2
       end
     end
@@ -21,13 +21,12 @@ namespace :assets do
   desc "Remove compiled assets"
   task :clean => :environment do
     load_tasks.call
-    Rake::Task["r2ap:clean"].invoke
+    Rake::Task["r2ap:clobber"].invoke
   end
 
-  # FIXME always just removes public/assets
-  #desc "Remove old assets"
-  #task :clobber => :environment do
-  #  load_tasks.call
-  #  Rake::Task["r2ap:clobber"].invoke
-  #end
+  desc "Remove old assets"
+  task :remove_old => :environment do
+    load_tasks.call
+    Rake::Task["r2ap:clean"].invoke
+  end
 end

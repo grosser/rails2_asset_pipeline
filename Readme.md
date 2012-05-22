@@ -77,11 +77,11 @@ end
 
     rake assets:precompile
     rake assets:clean
+    rake assets:remove_old # Keeps current + 2 older versions in public/assets
 
 ## Todo
  - read config from Rails 3 style config.assets
- - `rake assets:clobber` to remove old assets
- - asset helpers for inside css/scss
+ - asset image helpers for inside css/scss
 
 Author
 ======
