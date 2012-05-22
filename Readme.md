@@ -65,6 +65,7 @@ end
 ## View helpers
 ```
 # app/helpers/application_helper.rb
+require 'rails2_asset_pipeline/view_helpers'
 module ApplicationHelper
   include Rails2AssetPipeline::ViewHelpers
   ...
