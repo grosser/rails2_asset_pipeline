@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rails2_asset_pipeline (0.1.0)
+    rails2_asset_pipeline (0.1.1)
       sprockets
 
 GEM
@@ -20,7 +20,7 @@ GEM
     rspec-expectations (2.6.0)
       diff-lcs (~> 1.1.2)
     rspec-mocks (2.6.0)
-    sprockets (2.3.2)
+    sprockets (2.4.3)
       hike (~> 1.2)
       multi_json (~> 1.0)
       rack (~> 1.0)
