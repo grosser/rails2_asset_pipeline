@@ -13,8 +13,8 @@ Familiar asset handling for those stuck on Rails 2.
 ```
 rake assets:precompile
 rake assets:clean
-rake assets:remove_old
-rake assets:convert_jammit
+rake assets:remove_old      # Keeps current + 2 older versions in public/assets
+rake assets:convert_jammit  # reads config/assets.yml and converts packs into `app/assets/<type>/<pack>.js` with `//= require <dependency>`
 ```
 
 ```Erb
@@ -30,14 +30,7 @@ rake assets:convert_jammit
     # config/environment.rb
     config.gem "rails2_asset_pipeline"
 
-    # Rakefile
-    begin
-      require "rails2_asset_pipeline/tasks"
-    rescue LoadError
-      puts "rails2_asset_pipeline is not installed, you probably should run 'rake gems:install' or 'bundle install'."
-    end
-
-## Initializer
+### Initializer
 Here you can do additional configuration of sprockets.
 
 ```Ruby
@@ -47,7 +40,16 @@ Rails2AssetPipeline.setup do |sprockets|
 end
 ```
 
-## config.ru
+### Tasks
+
+    # Rakefile
+    begin
+      require "rails2_asset_pipeline/tasks"
+    rescue LoadError
+      puts "rails2_asset_pipeline is not installed, you probably should run 'rake gems:install' or 'bundle install'."
+    end
+
+### Dynamic assets for development
 Setup a config.ru so development has dynamic assets
 
 ```Ruby
@@ -65,7 +67,7 @@ map '/' do
 end
 ```
 
-## View helpers
+### View helpers
 ```
 # app/helpers/application_helper.rb
 require 'rails2_asset_pipeline/view_helpers'
@@ -76,14 +78,7 @@ end
 ```
 
 
-# Tasks
-
-    rake assets:precompile
-    rake assets:clean
-    rake assets:remove_old # Keeps current + 2 older versions in public/assets
-    rake assets:convert_jammit # reads config/assets.yml and converts packs into `app/assets/<type>/<pack>.js` with `//= require <dependency>`
-
-## Todo
+# Todo
  - read config from Rails 3 style config.assets
  - asset image helpers for inside css/scss
 
