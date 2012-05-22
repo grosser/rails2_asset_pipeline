@@ -8,6 +8,8 @@ Familiar asset handling for those stuck on Rails 2.
  - old asset versions can stay around during deploys
  - no monkey-patching, everything is opt-in
 
+[Example application](https://github.com/grosser/rails2_asset_pipeline_exmaple)
+
 # Usage
 
 ```
