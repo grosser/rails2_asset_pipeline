@@ -13,6 +13,7 @@ Familiar asset handling for those stuck on Rails 2.
 ```
 rake assets:precompile
 rake assets:clean
+rake assets:remove_old
 ```
 
 ```Erb
