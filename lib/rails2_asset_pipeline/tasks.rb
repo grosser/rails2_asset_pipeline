@@ -49,7 +49,7 @@ namespace :assets do
     jammit["javascripts"].each do |pack, assets|
       File.open("app/assets/javascripts/#{pack}.js", "w") do |f|
         assets.each do |file|
-          f.puts "//= require #{file.sub("public/javascripts", "").sub(".js","")}"
+          f.puts "//= require #{file.sub("public/javascripts/", "").sub(".js","")}"
         end
       end
     end
@@ -59,7 +59,7 @@ namespace :assets do
       File.open("app/assets/stylesheets/#{pack}.css", "w") do |f|
         f.puts "/*"
         assets.each do |file|
-          f.puts " *= require #{file.sub("public/stylesheets", "").sub(".css","")}"
+          f.puts " *= require #{file.sub("public/stylesheets/", "").sub(".css","")}"
         end
         f.puts " */"
       end

@@ -78,14 +78,14 @@ describe "Rails2AssetPipeline Tasks" do
       run "rake assets:convert_jammit"
       run("ls app/assets").should == "javascripts\nstylesheets\n"
       run("ls app/assets/javascripts").should == "a.js\nb.js\npack.js\n"
-      run("cat app/assets/javascripts/pack.js").should == "//= require /a\n//= require /b\n"
+      run("cat app/assets/javascripts/pack.js").should == "//= require a\n//= require b\n"
     end
 
     it "moves and combines stylesheets" do
       run "rake assets:convert_jammit"
       run("ls app/assets").should == "javascripts\nstylesheets\n"
       run("ls app/assets/stylesheets").should == "a.css\nb.css\npack.css\n"
-      run("cat app/assets/stylesheets/pack.css").should == "/*\n *= require /a\n *= require /b\n */\n"
+      run("cat app/assets/stylesheets/pack.css").should == "/*\n *= require a\n *= require b\n */\n"
     end
   end
 end
