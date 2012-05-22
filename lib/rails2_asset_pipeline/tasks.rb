@@ -34,12 +34,18 @@ namespace :assets do
   task :convert_jammit do
     require 'yaml'
 
+    # move folders
     sh "mkdir app/assets" unless File.exist?("app/assets")
-    sh "mv public/javascripts app/assets/javascripts"
-    sh "mv public/stylesheets app/assets/stylesheets"
+    folders = ["javascripts", "stylesheets"]
+    folders.each do |folder|
+      target = "app/assets/#{folder}"
+      raise "Remove #{target} before proceeding, I'm not merging!" if File.exist?(target)
+    end
+    folders.each{|f| sh "mv public/#{f} app/assets/#{f}" }
 
     jammit = YAML.load_file("config/assets.yml")
 
+    # convert javascript packs
     jammit["javascripts"].each do |pack, assets|
       File.open("app/assets/javascripts/#{pack}.js", "w") do |f|
         assets.each do |file|
@@ -48,6 +54,7 @@ namespace :assets do
       end
     end
 
+    # convert stylesheet packs
     jammit["stylesheets"].each do |pack, assets|
       File.open("app/assets/stylesheets/#{pack}.css", "w") do |f|
         f.puts "/*"

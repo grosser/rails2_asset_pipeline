@@ -67,6 +67,13 @@ describe "Rails2AssetPipeline Tasks" do
       write "public/stylesheets/b.css", "A"
     end
 
+    it "fails when folders already exist" do
+      run "mkdir -p app/assets/javascripts"
+      expect{
+        puts run "rake assets:convert_jammit"
+      }.to raise_error
+    end
+
     it "moves and combines javascripts" do
       run "rake assets:convert_jammit"
       run("ls app/assets").should == "javascripts\nstylesheets\n"
