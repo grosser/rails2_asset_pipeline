@@ -29,4 +29,33 @@ namespace :assets do
     load_tasks.call
     Rake::Task["r2ap:clean"].invoke
   end
+
+  desc "converts project from jammit based assets.yml"
+  task :convert_jammit do
+    require 'yaml'
+
+    sh "mkdir app/assets" unless File.exist?("app/assets")
+    sh "mv public/javascripts app/assets/javascripts"
+    sh "mv public/stylesheets app/assets/stylesheets"
+
+    jammit = YAML.load_file("config/assets.yml")
+
+    jammit["javascripts"].each do |pack, assets|
+      File.open("app/assets/javascripts/#{pack}.js", "w") do |f|
+        assets.each do |file|
+          f.puts "//= require #{file.sub("public/javascripts", "").sub(".js","")}"
+        end
+      end
+    end
+
+    jammit["stylesheets"].each do |pack, assets|
+      File.open("app/assets/stylesheets/#{pack}.css", "w") do |f|
+        f.puts "/*"
+        assets.each do |file|
+          f.puts "//= require #{file.sub("public/stylesheets", "").sub(".css","")}"
+        end
+        f.puts " */"
+      end
+    end
+  end
 end

@@ -1,0 +1,9 @@
+javascripts:
+  pack:
+    - public/javascripts/a.js
+    - public/javascripts/b.js
+
+stylesheets:
+  pack:
+    - public/stylesheets/a.css
+    - public/stylesheets/b.css

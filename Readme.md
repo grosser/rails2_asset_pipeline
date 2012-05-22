@@ -14,6 +14,7 @@ Familiar asset handling for those stuck on Rails 2.
 rake assets:precompile
 rake assets:clean
 rake assets:remove_old
+rake assets:convert_jammit
 ```
 
 ```Erb
@@ -80,6 +81,7 @@ end
     rake assets:precompile
     rake assets:clean
     rake assets:remove_old # Keeps current + 2 older versions in public/assets
+    rake assets:convert_jammit # reads config/assets.yml and converts packs into `app/assets/<type>/<pack>.js` with `//= require <dependency>`
 
 ## Todo
  - read config from Rails 3 style config.assets
