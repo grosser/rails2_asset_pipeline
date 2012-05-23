@@ -80,6 +80,10 @@ module ApplicationHelper
 end
 ```
 
+### Sass
+ - add `sass` to your gems for sass parsing
+ - add `sprockets-sass` to your gems for sass @import support
+
 
 # Todo
  - read config from Rails 3 style config.assets

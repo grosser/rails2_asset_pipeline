@@ -78,7 +78,7 @@ describe "Rails2AssetPipeline Tasks" do
       run "rake assets:convert_jammit"
       run("ls app/assets").should == "javascripts\nstylesheets\n"
       run("ls app/assets/javascripts").should == "a.js\nb.js\npack.js\n"
-      run("cat app/assets/javascripts/pack.js").should == "//= require a\n//= require b\n//= require_tree c\n"
+      run("cat app/assets/javascripts/pack.js").should == "//= require a\n//= require b\n//= require_tree ./c\n"
     end
 
     it "moves and combines stylesheets" do
@@ -103,7 +103,7 @@ describe "Rails2AssetPipeline Tasks" do
     it "fixes broken inputs" do
       write "public/stylesheets/c.css.scss", "a{}\n@import \"../global/_tables.scss\";\na{}"
       run "rake assets:convert_jammit"
-      run("cat app/assets/stylesheets/c.css.scss").should == "a{}\n@import \"../global/_tables.css\";\na{}"
+      run("cat app/assets/stylesheets/c.css.scss").should == "a{}\n@import \"../global/_tables\";\na{}"
     end
   end
 end

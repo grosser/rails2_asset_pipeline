@@ -23,7 +23,7 @@ module Rails2AssetPipeline
         content = File.read(file)
         rex = /^(@import ['"].*).scss(['"]);/
         if content =~ rex
-          File.open(file, 'w'){|f| f.write content.gsub(rex, "\\1.css\\2;") }
+          File.open(file, 'w'){|f| f.write content.gsub(rex, "\\1\\2;") }
         end
       end
 
@@ -39,7 +39,7 @@ module Rails2AssetPipeline
         File.open("app/assets/javascripts/#{pack}.js", "w") do |f|
           assets.each do |file|
             fuzzy = /[\/\*]*\*(.js)?$/
-            f.puts "//= #{file =~ fuzzy ? "require_tree" : "require"} #{file.sub("public/javascripts/", "").sub(".js","").sub(fuzzy,"")}"
+            f.puts "//= #{file =~ fuzzy ? "require_tree ./" : "require "}#{file.sub("public/javascripts/", "").sub(".js","").sub(fuzzy,"")}"
           end
         end
       end
