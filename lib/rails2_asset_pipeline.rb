@@ -4,6 +4,10 @@ require 'sprockets'
 module Rails2AssetPipeline
   STATIC_ENVIRONMENTS = ["production", "staging"]
 
+  class << self
+    attr_accessor :dynamic_assets_available
+  end
+
   def self.env
     @env || setup
   end
@@ -21,6 +25,7 @@ module Rails2AssetPipeline
   def self.config_ru
     lambda do
       unless STATIC_ENVIRONMENTS.include?(Rails.env)
+        Rails2AssetPipeline.dynamic_assets_available = true
         map '/assets' do
           run Rails2AssetPipeline.env
         end

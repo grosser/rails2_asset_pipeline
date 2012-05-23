@@ -4,7 +4,7 @@ Familiar asset handling for those stuck on Rails 2.
 
  - sprockets/coffee/sass etc goodness
  - application.js?time for development
- - application-MD5.js for production
+ - application-MD5.js for production  (and development without config.ru)
  - old asset versions can stay around during deploys
  - converter for jammit asset.yml
  - no monkey-patching, everything is opt-in
