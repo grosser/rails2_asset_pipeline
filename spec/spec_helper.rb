@@ -17,4 +17,8 @@ module Rails
   def self.env=(x)
     @env=x
   end
+
+  def self.root
+    Pathname.new(File.expand_path("../fake_rails", __FILE__))
+  end
 end

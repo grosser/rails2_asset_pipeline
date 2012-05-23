@@ -14,9 +14,9 @@ module Rails2AssetPipeline
 
   def self.setup
     @env ||= Sprockets::Environment.new
-    @env.append_path 'app/assets/images'
-    @env.append_path 'app/assets/javascripts'
-    @env.append_path 'app/assets/stylesheets'
+    Dir[Rails.root.join("app", "assets", "*")].each do |folder|
+      @env.append_path folder
+    end
     # TODO vendor + lib
     yield @env if block_given?
     @env
