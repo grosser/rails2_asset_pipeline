@@ -2,7 +2,7 @@ javascripts:
   pack:
     - public/javascripts/a.js
     - public/javascripts/b.js
-    - public/javascripts/c/**/*
+    - public/javascripts/c/**/*.js
 
 stylesheets:
   pack:

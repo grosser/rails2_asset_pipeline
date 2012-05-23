@@ -38,7 +38,7 @@ module Rails2AssetPipeline
       jammit["javascripts"].each do |pack, assets|
         File.open("app/assets/javascripts/#{pack}.js", "w") do |f|
           assets.each do |file|
-            fuzzy = /[\/*]+$/
+            fuzzy = /[\/\*]*\*(.js)?$/
             f.puts "//= #{file =~ fuzzy ? "require_tree" : "require"} #{file.sub("public/javascripts/", "").sub(".js","").sub(fuzzy,"")}"
           end
         end
