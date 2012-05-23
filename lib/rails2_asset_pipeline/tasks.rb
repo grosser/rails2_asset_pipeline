@@ -1,3 +1,4 @@
+# encoding: UTF-8
 require 'rake/sprocketstask'
 
 namespace :assets do
@@ -32,37 +33,7 @@ namespace :assets do
 
   desc "converts project from jammit based assets.yml"
   task :convert_jammit do
-    require 'yaml'
-
-    # move folders
-    sh "mkdir app/assets" unless File.exist?("app/assets")
-    folders = ["javascripts", "stylesheets"]
-    folders.each do |folder|
-      target = "app/assets/#{folder}"
-      raise "Remove #{target} before proceeding, I'm not merging!" if File.exist?(target)
-    end
-    folders.each{|f| sh "mv public/#{f} app/assets/#{f}" }
-
-    jammit = YAML.load_file("config/assets.yml")
-
-    # convert javascript packs
-    jammit["javascripts"].each do |pack, assets|
-      File.open("app/assets/javascripts/#{pack}.js", "w") do |f|
-        assets.each do |file|
-          f.puts "//= require #{file.sub("public/javascripts/", "").sub(".js","")}"
-        end
-      end
-    end
-
-    # convert stylesheet packs
-    jammit["stylesheets"].each do |pack, assets|
-      File.open("app/assets/stylesheets/#{pack}.css", "w") do |f|
-        f.puts "/*"
-        assets.each do |file|
-          f.puts " *= require #{file.sub("public/stylesheets/", "").sub(".css","")}"
-        end
-        f.puts " */"
-      end
-    end
+    require 'rails2_asset_pipeline/jammit_converter'
+    Rails2AssetPipeline::JammitConverter.convert
   end
 end

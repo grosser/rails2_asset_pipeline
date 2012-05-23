@@ -6,6 +6,7 @@ Familiar asset handling for those stuck on Rails 2.
  - application.js?time for development
  - application-MD5.js for production
  - old asset versions can stay around during deploys
+ - converter for jammit asset.yml
  - no monkey-patching, everything is opt-in
 
 [Example application](https://github.com/grosser/rails2_asset_pipeline_exmaple)
