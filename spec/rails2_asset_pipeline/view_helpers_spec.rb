@@ -18,13 +18,13 @@ describe Rails2AssetPipeline::ViewHelpers do
 
     it "returns a path with md5 on production" do
       Rails.env = "production"
-      env["xxx.js"] = mock(:digest => "abc", )
+      env["xxx.js"] = mock(:digest => "abc")
       pipeline_path("xxx.js").should == "/assets/xxx-abc.js"
     end
 
     it "returns a path with md5 on production and complicated file" do
       Rails.env = "production"
-      env["xxx.yy.js"] = mock(:digest => "abc", )
+      env["xxx.yy.js"] = mock(:digest => "abc")
       pipeline_path("xxx.yy.js").should == "/assets/xxx-abc.yy.js"
     end
 
