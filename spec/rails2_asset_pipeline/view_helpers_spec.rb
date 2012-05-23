@@ -27,7 +27,7 @@ describe Rails2AssetPipeline::ViewHelpers do
 
       it "returns a path with digest when dynamic loader is not available" do
         Rails2AssetPipeline.dynamic_assets_available = false
-        pipeline_path("xxx.js").should == "/assets/xxx.js?123456"
+        pipeline_path("xxx.js").should == "/assets/xxx-abc.js"
       end
     end
 
