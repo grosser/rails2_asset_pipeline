@@ -1,10 +1,20 @@
 module Rails2AssetPipeline
   module ViewHelpers
+    class << self
+      attr_accessor :ignored_folders # e.g. 'images'
+    end
+
     # Overwrite rails helper to use pipeline path for all relative assets
     # args: source, 'javascripts', 'js'
     def compute_public_path(*args)
       source = args[0]
-      source_is_relative = (source.is_a?(String) and source =~ /^[a-z]+(\/|\.|$)/) # xxx or xxx.js or xxx/yyy, not /xxx or http://
+      ignored_folders = Rails2AssetPipeline::ViewHelpers.ignored_folders
+      source_is_relative = (
+        source.is_a?(String) and
+        source =~ /^[a-z]+(\/|\.|$)/ and # xxx or xxx.js or xxx/yyy, not /xxx or http://
+        not (ignored_folders and ignored_folders.include?(args[1]))
+      )
+
       if source_is_relative
         source = "#{source}.#{args[2]}" unless source.include?(".")
         super(asset_path(source), *args[1..-1])

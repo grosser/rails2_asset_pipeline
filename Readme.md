@@ -24,6 +24,7 @@ rake assets:convert_jammit  # reads config/assets.yml and converts packs into `a
 With ViewHelpers included you can:
 <%= stylesheet_link_tag "application" %>
 <%= javascript_include_tag "application" %>
+<%= image_tag "foo.jpg" %> <-- will go to public if you set Rails2AssetPipeline::ViewHelpers.ignored_folders = ["images"]
 From good old public <%= javascript_include_tag "/javascripts/application.js" %>
 Just a path: <%= asset_path "application.js" %>
 ```

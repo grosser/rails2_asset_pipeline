@@ -71,6 +71,12 @@ describe Rails2AssetPipeline::ViewHelpers do
       @compute_public_path.should == ["http://xxx", "a", "b"]
     end
 
+    it "does nothing for ignored folders" do
+      Rails2AssetPipeline::ViewHelpers.ignored_folders = ["a"]
+      compute_public_path("xxx", "a", "b").should == :super
+      @compute_public_path.should == ["xxx", "a", "b"]
+    end
+
     it "converts relative, nested paths without extension" do
       env["xxx/yyy.js"] = env["xxx.js"]
       compute_public_path("xxx/yyy", "a", "js").should == :super

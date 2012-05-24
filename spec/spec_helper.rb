@@ -7,6 +7,7 @@ RSpec.configure do |config|
     # cleanup
     Rails2AssetPipeline.dynamic_assets_available = false
     Rails.env = "development"
+    Rails2AssetPipeline::ViewHelpers.ignored_folders = nil
   end
 end
 
