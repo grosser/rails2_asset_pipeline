@@ -88,6 +88,12 @@ describe Rails2AssetPipeline::ViewHelpers do
       @compute_public_path.should == ["/assets/xxx.js?123456", "a", "b"]
     end
 
+    it "converts relative paths with extension and non-word characters" do
+      env["xx_-x.js"] = env["xxx.js"]
+      compute_public_path("xx_-x.js", "a", "b").should == :super
+      @compute_public_path.should == ["/assets/xx_-x.js?123456", "a", "b"]
+    end
+
     it "converts relative paths without extension" do
       compute_public_path("xxx", "a", "js").should == :super
       @compute_public_path.should == ["/assets/xxx.js?123456", "a", "js"]

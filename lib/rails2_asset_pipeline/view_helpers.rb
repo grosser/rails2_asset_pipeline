@@ -11,7 +11,7 @@ module Rails2AssetPipeline
       ignored_folders = Rails2AssetPipeline::ViewHelpers.ignored_folders
       source_is_relative = (
         source.is_a?(String) and
-        source =~ /^[a-z]+(\/|\.|$)/ and # xxx or xxx.js or xxx/yyy, not /xxx or http://
+        source =~ /^[\w\-]+(\/|\.|$)/ and # xxx or xxx.js or xxx/yyy, not /xxx or http://
         not (ignored_folders and ignored_folders.include?(args[1]))
       )
 
