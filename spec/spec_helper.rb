@@ -6,6 +6,7 @@ RSpec.configure do |config|
   config.before do
     # cleanup
     Rails2AssetPipeline.dynamic_assets_available = false
+    Rails.env = "development"
   end
 end
 

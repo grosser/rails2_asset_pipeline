@@ -7,7 +7,7 @@ Familiar asset handling for those stuck on Rails 2.
  - application-MD5.js for production  (and development without config.ru)
  - old asset versions can stay around during deploys
  - converter for jammit asset.yml
- - no monkey-patching, everything is opt-in
+ - no forced monkey-patching, everything is opt-in
 
 [Example application](https://github.com/grosser/rails2_asset_pipeline_exmaple)
 
@@ -21,8 +21,11 @@ rake assets:convert_jammit  # reads config/assets.yml and converts packs into `a
 ```
 
 ```Erb
-<%= stylesheet_link_tag pipeline_path("application.css") %>
-<%= javascript_include_tag pipeline_path("application.js") %>
+With ViewHelpers included you can:
+<%= stylesheet_link_tag "application" %>
+<%= javascript_include_tag "application" %>
+From good old public <%= javascript_include_tag "/javascripts/application.js" %>
+Just a path: <%= asset_path "application.js" %>
 ```
 
 
@@ -79,6 +82,9 @@ module ApplicationHelper
   ...
 end
 ```
+
+### Static code
+You can also use `Rails2AssetPipeline::ViewHelpers.asset_path("application.js")`
 
 ### Sass
  - add `sass` to your gems for sass parsing

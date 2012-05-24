@@ -1,6 +1,19 @@
 module Rails2AssetPipeline
   module ViewHelpers
-    def pipeline_path(asset)
+    # Overwrite rails helper to use pipeline path for all relative assets
+    # args: source, 'javascripts', 'js'
+    def compute_public_path(*args)
+      source = args[0]
+      source_is_relative = (source.is_a?(String) and source =~ /^[a-z]+(\/|\.|$)/) # xxx or xxx.js or xxx/yyy, not /xxx or http://
+      if source_is_relative
+        source = "#{source}.#{args[2]}" unless source.include?(".")
+        super(asset_path(source), *args[1..-1])
+      else
+        super
+      end
+    end
+
+    def asset_path(asset)
       data = Rails2AssetPipeline.env[asset]
       return "/assets/NOT_FOUND" unless data
       asset = "/assets/#{asset}"
@@ -11,5 +24,6 @@ module Rails2AssetPipeline
         "#{asset}?#{data.mtime.to_i}"
       end
     end
+    module_function :asset_path
   end
 end
