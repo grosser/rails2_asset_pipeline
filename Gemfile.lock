@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rails2_asset_pipeline (0.1.11)
+    rails2_asset_pipeline (0.1.12)
       sprockets
 
 GEM
