@@ -23,6 +23,14 @@ module Rails2AssetPipeline
       end
     end
 
+    def rails_asset_id(file)
+      if file.start_with?("/assets/")
+        nil
+      else
+        super
+      end
+    end
+
     def asset_path(asset)
       data = Rails2AssetPipeline.env[asset]
       return "/assets/NOT_FOUND" unless data

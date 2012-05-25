@@ -6,6 +6,11 @@ describe Rails2AssetPipeline::ViewHelpers do
       @compute_public_path = args
       :super
     end
+
+    def rails_asset_id(*args)
+      @rails_asset_id = args
+      :super
+    end
   end
 
   include FakeSuper
@@ -19,7 +24,7 @@ describe Rails2AssetPipeline::ViewHelpers do
     env["xxx.js"] = mock(:digest => "abc", :mtime => Time.at(123456))
   end
 
-  describe "#asset" do
+  describe "#asset_path" do
     it "is also static" do
       Rails2AssetPipeline::ViewHelpers.asset_path("xxx.js").should_not == nil
     end
@@ -52,6 +57,18 @@ describe Rails2AssetPipeline::ViewHelpers do
         env["xxx.yy.js"] = env["xxx.js"]
         asset_path("xxx.yy.js").should == "/assets/xxx-abc.yy.js"
       end
+    end
+  end
+
+  describe "#rails_asset_id" do
+    it "does not return ids for assets" do
+      rails_asset_id("/assets/xxx-abc.js").should == nil
+      @rails_asset_id.should == nil
+    end
+
+    it "does not return ids non-assets" do
+      rails_asset_id("/javascripts/xxx.js").should == :super
+      @rails_asset_id.should == ["/javascripts/xxx.js"]
     end
   end
 
