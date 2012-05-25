@@ -8,6 +8,7 @@ namespace :assets do
         t.environment = Rails2AssetPipeline.env
         t.output = "./public/assets"
         t.assets = t.environment.paths.map{|p| Dir["#{p.sub(Rails.root.to_s,"")}/**/*"] }.flatten
+        t.log_level = Logger::ERROR
         t.keep = 2
       end
     end
