@@ -34,8 +34,8 @@ describe Rails2AssetPipeline::ViewHelpers do
     before do
       write manifest, <<-JSON
 {
-  "files": {"xxx.js": "xxx-manifest.js"},
-  "assets": {
+  "assets": {"xxx.js": "xxx-manifest.js"},
+  "files": {
     "xxx-manifest.js": {
       "logical_path": "xxx.js",
       "mtime": "2011-12-13T21:47:08-06:00",

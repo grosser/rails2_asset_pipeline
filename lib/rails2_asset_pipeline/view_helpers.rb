@@ -36,7 +36,7 @@ module Rails2AssetPipeline
         manifest = "#{Rails.root}/public/assets/manifest.json"
         raise "No dynamic assets available and no manifest found, run rake assets:precompile" unless File.exist?(manifest)
         @sprockets_manifest ||= Sprockets::Manifest.new(Rails2AssetPipeline.env, manifest)
-        @sprockets_manifest.files[asset] || "NOT_FOUND_IN_MANIFEST"
+        @sprockets_manifest.assets[asset] || "NOT_FOUND_IN_MANIFEST"
       else
         data = Rails2AssetPipeline.env[asset]
         data ? "#{asset}?#{data.mtime.to_i}" : "NOT_FOUND_IN_ASSETS"
