@@ -16,7 +16,11 @@ describe Rails2AssetPipeline::ViewHelpers do
   include FakeSuper
   include Rails2AssetPipeline::ViewHelpers
 
-  let(:env){ {} }
+  let(:env){
+    env = {}
+    env.stub(:logger).and_return mock()
+    env
+  }
 
   before do
     Rails2AssetPipeline.stub(:env).and_return env
@@ -25,12 +29,33 @@ describe Rails2AssetPipeline::ViewHelpers do
   end
 
   describe "#asset_path" do
+    let(:manifest){ "#{Rails.root}/public/assets/manifest.json" }
+
+    before do
+      write manifest, <<-JSON
+{
+  "files": {"xxx.js": "xxx-manifest.js"},
+  "assets": {
+    "xxx-manifest.js": {
+      "logical_path": "xxx.js",
+      "mtime": "2011-12-13T21:47:08-06:00",
+      "digest": "manifest"
+    }
+  }
+}
+      JSON
+    end
+
+    after do
+      run "rm -rf public"
+    end
+
     it "is also static" do
       Rails2AssetPipeline::ViewHelpers.asset_path("xxx.js").should_not == nil
     end
 
     it "silently fails with unfound assets" do
-      asset_path("yyy.js").should == "/assets/NOT_FOUND"
+      asset_path("yyy.js").should == "/assets/NOT_FOUND_IN_ASSETS"
     end
 
     context "development" do
@@ -38,9 +63,14 @@ describe Rails2AssetPipeline::ViewHelpers do
         asset_path("xxx.js").should == "/assets/xxx.js?123456"
       end
 
-      it "returns a path with digest when dynamic loader is not available" do
+      it "does not care if manifest is missing" do
+        run "rm #{manifest}"
+        asset_path("xxx.js").should == "/assets/xxx.js?123456"
+      end
+
+      it "is digested when dynamic loader is not available" do
         Rails2AssetPipeline.dynamic_assets_available = false
-        asset_path("xxx.js").should == "/assets/xxx-abc.js"
+        asset_path("xxx.js").should == "/assets/xxx-manifest.js"
       end
     end
 
@@ -49,13 +79,20 @@ describe Rails2AssetPipeline::ViewHelpers do
         Rails.env = "production"
       end
 
-      it "returns a path with md5" do
-        asset_path("xxx.js").should == "/assets/xxx-abc.js"
+      it "returns a path with digest" do
+        asset_path("xxx.js").should == "/assets/xxx-manifest.js"
       end
 
-      it "returns a path with md5 on production and complicated file" do
-        env["xxx.yy.js"] = env["xxx.js"]
-        asset_path("xxx.yy.js").should == "/assets/xxx-abc.yy.js"
+      it "fails if file is missing from the manifest" do
+        env["yyy.js"] = env["xxx.js"]
+        asset_path("yyy.js").should == "/assets/NOT_FOUND_IN_MANIFEST"
+      end
+
+      it "fails if there is no manifest" do
+        run "rm #{manifest}"
+        expect{
+          asset_path("yyy.js")
+        }.to raise_error
       end
     end
   end

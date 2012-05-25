@@ -1,18 +1,6 @@
 require 'spec_helper'
 
 describe "Rails2AssetPipeline Tasks" do
-  def run(cmd)
-    result = `#{cmd} 2>&1`
-    raise "FAILED #{cmd} --> #{result}" unless $?.success?
-    result
-  end
-
-  def write(file, content)
-    folder = File.dirname(file)
-    run "mkdir -p #{folder}" unless File.exist?(folder)
-    File.open(file, 'w'){|f| f.write content }
-  end
-
   def cleanup
     run "rm -rf public/assets"
     run "rm -rf public/javascripts"

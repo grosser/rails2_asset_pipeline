@@ -32,4 +32,8 @@ module Rails2AssetPipeline
       end
     end
   end
+
+  def self.static?
+    not Rails2AssetPipeline.dynamic_assets_available or Rails2AssetPipeline::STATIC_ENVIRONMENTS.include?(Rails.env)
+  end
 end

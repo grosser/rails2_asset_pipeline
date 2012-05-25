@@ -11,6 +11,18 @@ RSpec.configure do |config|
   end
 end
 
+def run(cmd)
+  result = `#{cmd} 2>&1`
+  raise "FAILED #{cmd} --> #{result}" unless $?.success?
+  result
+end
+
+def write(file, content)
+  folder = File.dirname(file)
+  run "mkdir -p #{folder}" unless File.exist?(folder)
+  File.open(file, 'w'){|f| f.write content }
+end
+
 module Rails
   def self.env
     @env || "test"

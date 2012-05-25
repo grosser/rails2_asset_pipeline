@@ -32,15 +32,17 @@ module Rails2AssetPipeline
     end
 
     def asset_path(asset)
-      data = Rails2AssetPipeline.env[asset]
-      return "/assets/NOT_FOUND" unless data
-      asset = "/assets/#{asset}"
-
-      if not Rails2AssetPipeline.dynamic_assets_available or Rails2AssetPipeline::STATIC_ENVIRONMENTS.include?(Rails.env)
-        asset.sub(/(\.[\.a-z]+$)/, "-#{data.digest}\\1")
+      asset_with_id = if Rails2AssetPipeline.static?
+        manifest = "#{Rails.root}/public/assets/manifest.json"
+        raise "No dynamic assets available and no manifest found, run rake assets:precompile" unless File.exist?(manifest)
+        @sprockets_manifest ||= Sprockets::Manifest.new(Rails2AssetPipeline.env, manifest)
+        @sprockets_manifest.files[asset] || "NOT_FOUND_IN_MANIFEST"
       else
-        "#{asset}?#{data.mtime.to_i}"
+        data = Rails2AssetPipeline.env[asset]
+        data ? "#{asset}?#{data.mtime.to_i}" : "NOT_FOUND_IN_ASSETS"
       end
+
+      "/assets/#{asset_with_id}"
     end
     module_function :asset_path
   end

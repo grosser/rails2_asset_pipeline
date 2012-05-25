@@ -4,7 +4,7 @@ Familiar asset handling for those stuck on Rails 2.
 
  - sprockets/coffee/sass etc goodness
  - application.js?time for development
- - application-MD5.js for production  (and development without config.ru)
+ - application-MD5.js for production  (and development without config.ru, read from public/assets/manifest.json)
  - old asset versions can stay around during deploys
  - converter for jammit asset.yml
  - no forced monkey-patching, everything is opt-in
@@ -95,6 +95,7 @@ You can also use `Rails2AssetPipeline::ViewHelpers.asset_path("application.js")`
 # Todo
  - read config from Rails 3 style config.assets
  - asset image helpers for inside css/scss
+ - make output location configurable in .setup and use it for manifest location and rake tasks
 
 Author
 ======
