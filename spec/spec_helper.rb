@@ -8,6 +8,7 @@ RSpec.configure do |config|
     Rails2AssetPipeline.dynamic_assets_available = false
     Rails.env = "development"
     Rails2AssetPipeline::ViewHelpers.ignored_folders = nil
+    Rails2AssetPipeline.class_eval{ @manifest_exists = nil }
   end
 end
 

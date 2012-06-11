@@ -101,9 +101,20 @@ describe Rails2AssetPipeline::ViewHelpers do
       end
 
       it "fails" do
-        expect{
-          asset_path("yyy.js")
-        }.to raise_error
+        expect{ asset_path("yyy.js") }.to raise_error
+      end
+
+      it "does not recheck the file all the time on success" do
+        write manifest, "{}"
+        asset_path("yyy.js")
+        run "rm #{manifest}"
+        asset_path("yyy.js")
+      end
+
+      it "does recheck the file all the time on failure" do
+        expect{ asset_path("yyy.js") }.to raise_error /No dynamic assets available/
+        write manifest, "Foo"
+        expect{ asset_path("yyy.js") }.to raise_error /unexpected token at 'Foo'/ # unhelpful but fast
       end
 
       it "tells me to copy config.ru.example if it is helpful" do
