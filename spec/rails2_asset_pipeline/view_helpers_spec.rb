@@ -113,8 +113,8 @@ describe Rails2AssetPipeline::ViewHelpers do
 
       it "does recheck the file all the time on failure" do
         expect{ asset_path("yyy.js") }.to raise_error /No dynamic assets available/
-        write manifest, "Foo"
-        expect{ asset_path("yyy.js") }.to raise_error /at 'Foo'/ # unhelpful but fast
+        write manifest, "FooBar"
+        expect{ asset_path("yyy.js") }.to raise_error /FooBar/ # unhelpful but fast
       end
 
       it "tells me to copy config.ru.example if it is helpful" do
