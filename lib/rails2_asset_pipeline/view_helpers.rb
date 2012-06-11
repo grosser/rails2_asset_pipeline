@@ -32,10 +32,10 @@ module Rails2AssetPipeline
     end
 
     def asset_path(asset)
+      Rails2AssetPipeline.warn_user_about_misconfiguration!
+
       asset_with_id = if Rails2AssetPipeline.static?
-        manifest = "#{Rails.root}/public/assets/manifest.json"
-        raise "No dynamic assets available and no manifest found, run rake assets:precompile" unless File.exist?(manifest)
-        @sprockets_manifest ||= Sprockets::Manifest.new(Rails2AssetPipeline.env, manifest)
+        @sprockets_manifest ||= Sprockets::Manifest.new(Rails2AssetPipeline.env, Rails2AssetPipeline.manifest)
         @sprockets_manifest.assets[asset] || "NOT_FOUND_IN_MANIFEST"
       else
         data = Rails2AssetPipeline.env[asset]

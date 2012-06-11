@@ -26,6 +26,7 @@ describe Rails2AssetPipeline::ViewHelpers do
     Rails2AssetPipeline.stub(:env).and_return env
     Rails2AssetPipeline.dynamic_assets_available = true
     env["xxx.js"] = mock(:digest => "abc", :mtime => Time.at(123456))
+
   end
 
   describe "#asset_path" do
@@ -87,12 +88,29 @@ describe Rails2AssetPipeline::ViewHelpers do
         env["yyy.js"] = env["xxx.js"]
         asset_path("yyy.js").should == "/assets/NOT_FOUND_IN_MANIFEST"
       end
+    end
 
-      it "fails if there is no manifest" do
+    context "with no way of resolving assets" do
+      before do
+        Rails.env = "production"
         run "rm #{manifest}"
+      end
+
+      after do
+        run "rm -f config.ru.example"
+      end
+
+      it "fails" do
         expect{
           asset_path("yyy.js")
         }.to raise_error
+      end
+
+      it "tells me to copy config.ru.example if it is helpful" do
+        write "config.ru.example", "Rails2AssetPipeline.config_ru"
+        expect{
+          asset_path("yyy.js")
+        }.to raise_error(/cp config.ru.example config.ru/)
       end
     end
   end

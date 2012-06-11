@@ -36,4 +36,19 @@ module Rails2AssetPipeline
   def self.static?
     not Rails2AssetPipeline.dynamic_assets_available or Rails2AssetPipeline::STATIC_ENVIRONMENTS.include?(Rails.env)
   end
+
+  def self.manifest
+    "#{Rails.root}/public/assets/manifest.json"
+  end
+
+  def self.warn_user_about_misconfiguration!
+    return unless Rails2AssetPipeline.static? and not File.exist?(manifest)
+
+    config = "config.ru.example"
+    if File.exist?(config) and File.read(config).include?("Rails2AssetPipeline.config_ru")
+      raise "No dynamic assets available and no #{manifest} found, run `rake assets:precompile` for static assets or `cp #{config} config.ru` for dynamic assets"
+    else
+      raise "No dynamic assets available and no #{manifest} found, run `rake assets:precompile` for static assets or read https://github.com/grosser/rails2_asset_pipeline#dynamic-assets-for-development for instructions on dynamic assets"
+    end
+  end
 end
