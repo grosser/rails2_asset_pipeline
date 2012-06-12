@@ -36,10 +36,10 @@ module Rails2AssetPipeline
 
       asset_with_id = if Rails2AssetPipeline.static?
         @sprockets_manifest ||= Sprockets::Manifest.new(Rails2AssetPipeline.env, Rails2AssetPipeline.manifest)
-        @sprockets_manifest.assets[asset] || "NOT_FOUND_IN_MANIFEST"
+        @sprockets_manifest.assets[asset] || "NOT_FOUND_IN_MANIFEST_#{asset}"
       else
         data = Rails2AssetPipeline.env[asset]
-        data ? "#{asset}?#{data.mtime.to_i}" : "NOT_FOUND_IN_ASSETS"
+        data ? "#{asset}?#{data.mtime.to_i}" : "NOT_FOUND_IN_ASSETS_#{asset}"
       end
 
       "/assets/#{asset_with_id}"

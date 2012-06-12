@@ -56,7 +56,7 @@ describe Rails2AssetPipeline::ViewHelpers do
     end
 
     it "silently fails with unfound assets" do
-      asset_path("yyy.js").should == "/assets/NOT_FOUND_IN_ASSETS"
+      asset_path("yyy.js").should == "/assets/NOT_FOUND_IN_ASSETS_yyy.js"
     end
 
     context "development" do
@@ -86,7 +86,7 @@ describe Rails2AssetPipeline::ViewHelpers do
 
       it "fails if file is missing from the manifest" do
         env["yyy.js"] = env["xxx.js"]
-        asset_path("yyy.js").should == "/assets/NOT_FOUND_IN_MANIFEST"
+        asset_path("yyy.js").should == "/assets/NOT_FOUND_IN_MANIFEST_yyy.js"
       end
     end
 
