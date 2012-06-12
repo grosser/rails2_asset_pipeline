@@ -6,6 +6,7 @@ describe "Rails2AssetPipeline Tasks" do
     run "rm -rf public/javascripts"
     run "rm -rf public/stylesheets"
     run "rm -rf app/assets"
+    run "rm -rf config/initializers"
     write "app/assets/javascripts/application.js", "alert(1)"
   end
 
@@ -17,6 +18,13 @@ describe "Rails2AssetPipeline Tasks" do
       ensure
         cleanup
       end
+    end
+  end
+
+  describe "assets:config" do
+    it "loads the initializer" do
+      write "config/initializers/rails2_asset_pipeline.rb", "puts 'Foo'"
+      run("rake assets:config").should =~ /Foo/
     end
   end
 

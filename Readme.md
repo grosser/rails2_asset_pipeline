@@ -42,6 +42,7 @@ Here you can do additional configuration of sprockets.
 
 ```Ruby
 # config/initializers/rails2_asset_pipeline.rb
+# will be loaded without the rails environment when running rake assets:precompile
 Rails2AssetPipeline.setup do |sprockets|
   # ... additional config ...
 end
