@@ -38,14 +38,22 @@ Just a path: <%= asset_path "application.js" %>
     config.gem "rails2_asset_pipeline"
 
 ### Initializer
-Here you can do additional configuration of sprockets.
+Here you can do configuration of sprockets.
+ - loaded in `rake assets:precompile` **without** the rails environment (to enable compiling/deploying without development environment)
+ - configure sprockets
+ - require sprockets extensions like sprockets/sass
 
 ```Ruby
 # config/initializers/rails2_asset_pipeline.rb
-# will be loaded without the rails environment when running rake assets:precompile
+require "sprockets/sass"
+
 Rails2AssetPipeline.setup do |sprockets|
   # ... additional config ...
 end
+
+# let image_tag still go to public/images
+require 'rails2_asset_pipeline/view_helpers'
+Rails2AssetPipeline::ViewHelpers.ignored_folders = ["images"]
 ```
 
 ### Tasks
