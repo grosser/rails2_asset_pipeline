@@ -51,4 +51,15 @@ describe Rails2AssetPipeline do
       @mapped.should == nil
     end
   end
+
+  describe ".manifest" do
+    it "can be set" do
+      Rails2AssetPipeline.manifest = "xxx"
+      Rails2AssetPipeline.manifest.should == "xxx"
+    end
+
+    it "is there" do
+      Rails2AssetPipeline.manifest.should =~ %r{/spec/fake_rails/public/assets/manifest.json$}
+    end
+  end
 end

@@ -5,7 +5,7 @@ module Rails2AssetPipeline
   STATIC_ENVIRONMENTS = ["production", "staging"]
 
   class << self
-    attr_accessor :dynamic_assets_available
+    attr_accessor :dynamic_assets_available, :manifest
   end
 
   def self.env
@@ -38,7 +38,7 @@ module Rails2AssetPipeline
   end
 
   def self.manifest
-    "#{Rails.root}/public/assets/manifest.json"
+    @manifest ||= "#{Rails.root}/public/assets/manifest.json"
   end
 
   def self.warn_user_about_misconfiguration!

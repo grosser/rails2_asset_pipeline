@@ -96,6 +96,16 @@ end
 ### Static code
 You can also use `Rails2AssetPipeline::ViewHelpers.asset_path("application.js")`
 
+### Fast tests
+To not compile assets during testing you can overwrite the manifest.
+```Ruby
+# spec/fixtures/empty_manifest.json
+{"assets": {}, "files": {}}
+
+# spec/spec_helper.rb
+Rails2AssetPipeline.manifest = Rails.root.join("spec/fixtures/empty_manifest.json")
+```
+
 ### Sass
  - add `sass` to your gems for sass parsing
  - add `sprockets-sass` to your gems for sass @import support
