@@ -62,4 +62,30 @@ describe Rails2AssetPipeline do
       Rails2AssetPipeline.manifest.should =~ %r{/spec/fake_rails/public/assets/manifest.json$}
     end
   end
+
+  describe ".with_dynamic_assets_available" do
+    before do
+      Rails2AssetPipeline.dynamic_assets_available = true
+    end
+
+    it "sets" do
+      result = nil
+      Rails2AssetPipeline.with_dynamic_assets_available(false){ result = Rails2AssetPipeline.dynamic_assets_available }
+      result.should == false
+    end
+
+    it "reverts" do
+      Rails2AssetPipeline.with_dynamic_assets_available(false){  }
+      Rails2AssetPipeline.dynamic_assets_available.should == true
+    end
+
+    it "reverts on error" do
+      expect{ Rails2AssetPipeline.with_dynamic_assets_available(false){ raise } }.to raise_error
+      Rails2AssetPipeline.dynamic_assets_available.should == true
+    end
+
+    it "returns yielded" do
+      Rails2AssetPipeline.with_dynamic_assets_available(false){ 5 }.should == 5
+    end
+  end
 end

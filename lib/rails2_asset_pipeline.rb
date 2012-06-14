@@ -37,6 +37,14 @@ module Rails2AssetPipeline
     not Rails2AssetPipeline.dynamic_assets_available or Rails2AssetPipeline::STATIC_ENVIRONMENTS.include?(Rails.env)
   end
 
+  def self.with_dynamic_assets_available(value)
+    old = dynamic_assets_available
+    self.dynamic_assets_available = value
+    yield
+  ensure
+    self.dynamic_assets_available = old
+  end
+
   def self.manifest
     @manifest ||= "#{Rails.root}/public/assets/manifest.json"
   end
