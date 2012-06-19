@@ -16,7 +16,7 @@ module Rails2AssetPipeline
       )
 
       if source_is_relative
-        source = "#{source}.#{args[2]}" unless source.include?(".")
+        source = "#{source}.#{args[2]}" unless source =~ /\.\w+$/
         super(asset_path(source), *args[1..-1])
       else
         super
@@ -36,10 +36,10 @@ module Rails2AssetPipeline
 
       asset_with_id = if Rails2AssetPipeline.static?
         @sprockets_manifest ||= Sprockets::Manifest.new(Rails2AssetPipeline.env, Rails2AssetPipeline.manifest)
-        @sprockets_manifest.assets[asset] || "NOT_FOUND_IN_MANIFEST_#{asset}"
+        @sprockets_manifest.assets[asset] || "DID_NOT_FIND_#{asset}_IN_MANIFEST"
       else
         data = Rails2AssetPipeline.env[asset]
-        data ? "#{asset}?#{data.mtime.to_i}" : "NOT_FOUND_IN_ASSETS_#{asset}"
+        data ? "#{asset}?#{data.mtime.to_i}" : "DID_NOT_FIND_#{asset}_IN_ASSETS"
       end
 
       "/assets/#{asset_with_id}"

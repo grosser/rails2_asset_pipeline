@@ -56,7 +56,7 @@ describe Rails2AssetPipeline::ViewHelpers do
     end
 
     it "silently fails with unfound assets" do
-      asset_path("yyy.js").should == "/assets/NOT_FOUND_IN_ASSETS_yyy.js"
+      asset_path("yyy.js").should == "/assets/DID_NOT_FIND_yyy.js_IN_ASSETS"
     end
 
     context "development" do
@@ -86,7 +86,7 @@ describe Rails2AssetPipeline::ViewHelpers do
 
       it "fails if file is missing from the manifest" do
         env["yyy.js"] = env["xxx.js"]
-        asset_path("yyy.js").should == "/assets/NOT_FOUND_IN_MANIFEST_yyy.js"
+        asset_path("yyy.js").should == "/assets/DID_NOT_FIND_yyy.js_IN_MANIFEST"
       end
     end
 
@@ -169,6 +169,12 @@ describe Rails2AssetPipeline::ViewHelpers do
     it "converts relative paths with extension" do
       compute_public_path("xxx.js", "a", "b").should == :super
       @compute_public_path.should == ["/assets/xxx.js?123456", "a", "b"]
+    end
+
+    it "converts relative paths with ." do
+      env["xxxv1.2/xxx.js"] = env["xxx.js"]
+      compute_public_path("xxxv1.2/xxx", "a", "js").should == :super
+      @compute_public_path.should == ["/assets/xxxv1.2/xxx.js?123456", "a", "js"]
     end
 
     it "converts relative paths with extension and non-word characters" do
