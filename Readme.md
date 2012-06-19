@@ -47,6 +47,7 @@ Here you can do configuration of sprockets.
 # config/initializers/rails2_asset_pipeline.rb
 if Rails.env.development? # dynamic asset compilation needs these
   require 'sprockets/sass' # need sass ?
+  autoload :Sass, 'sass' # require if used inside rake tasks <-> require 'sass' takes 0.8s
   require 'sprockets/source_url' # sprockets-source_url for debugable assets in chrome
 end
 
