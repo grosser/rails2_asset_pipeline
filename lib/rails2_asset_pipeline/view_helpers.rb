@@ -16,7 +16,7 @@ module Rails2AssetPipeline
       )
 
       if source_is_relative
-        source = "#{source}.#{args[2]}" unless source =~ /\.\w+$/
+        source = "#{source}.#{args[2]}" unless source =~ /\.#{args[2]}$/o
         super(asset_path(source), *args[1..-1])
       else
         super

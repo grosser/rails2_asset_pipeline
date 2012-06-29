@@ -187,5 +187,11 @@ describe Rails2AssetPipeline::ViewHelpers do
       compute_public_path("xxx", "a", "js").should == :super
       @compute_public_path.should == ["/assets/xxx.js?123456", "a", "js"]
     end
+
+    it "converts relative paths without extension and . filenames" do
+      env["xx.x.js"] = env["xxx.js"]
+      compute_public_path("xx.x", "a", "js").should == :super
+      @compute_public_path.should == ["/assets/xx.x.js?123456", "a", "js"]
+    end
   end
 end
