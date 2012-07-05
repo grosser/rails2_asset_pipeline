@@ -140,24 +140,24 @@ describe Rails2AssetPipeline::ViewHelpers do
 
   describe "#compute_public_path" do
     it "does nothing for symbols" do
-      compute_public_path(:xxx, "a", "b").should == :super
-      @compute_public_path.should == [:xxx, "a", "b"]
+      compute_public_path(:xxx, "a", "js").should == :super
+      @compute_public_path.should == [:xxx, "a", "js"]
     end
 
     it "does nothing for paths starting with /" do
-      compute_public_path("/xxx", "a", "b").should == :super
-      @compute_public_path.should == ["/xxx", "a", "b"]
+      compute_public_path("/xxx", "a", "js").should == :super
+      @compute_public_path.should == ["/xxx", "a", "js"]
     end
 
     it "does nothing for urls" do
-      compute_public_path("http://xxx", "a", "b").should == :super
-      @compute_public_path.should == ["http://xxx", "a", "b"]
+      compute_public_path("http://xxx", "a", "js").should == :super
+      @compute_public_path.should == ["http://xxx", "a", "js"]
     end
 
     it "does nothing for ignored folders" do
       Rails2AssetPipeline::ViewHelpers.ignored_folders = ["a"]
-      compute_public_path("xxx", "a", "b").should == :super
-      @compute_public_path.should == ["xxx", "a", "b"]
+      compute_public_path("xxx", "a", "js").should == :super
+      @compute_public_path.should == ["xxx", "a", "js"]
     end
 
     it "converts relative, nested paths without extension" do
@@ -167,8 +167,8 @@ describe Rails2AssetPipeline::ViewHelpers do
     end
 
     it "converts relative paths with extension" do
-      compute_public_path("xxx.js", "a", "b").should == :super
-      @compute_public_path.should == ["/assets/xxx.js?123456", "a", "b"]
+      compute_public_path("xxx.js", "a", "js").should == :super
+      @compute_public_path.should == ["/assets/xxx.js?123456", "a", "js"]
     end
 
     it "converts relative paths with ." do
@@ -179,8 +179,8 @@ describe Rails2AssetPipeline::ViewHelpers do
 
     it "converts relative paths with extension and non-word characters" do
       env["xx_-x.js"] = env["xxx.js"]
-      compute_public_path("xx_-x.js", "a", "b").should == :super
-      @compute_public_path.should == ["/assets/xx_-x.js?123456", "a", "b"]
+      compute_public_path("xx_-x.js", "a", "js").should == :super
+      @compute_public_path.should == ["/assets/xx_-x.js?123456", "a", "js"]
     end
 
     it "converts relative paths without extension" do
@@ -192,6 +192,11 @@ describe Rails2AssetPipeline::ViewHelpers do
       env["xx.x.js"] = env["xxx.js"]
       compute_public_path("xx.x", "a", "js").should == :super
       @compute_public_path.should == ["/assets/xx.x.js?123456", "a", "js"]
+    end
+
+    it "converts relative paths with extensions and no default extension" do
+      compute_public_path("xxx.js", "a").should == :super
+      @compute_public_path.should == ["/assets/xxx.js?123456", "a"]
     end
   end
 end
