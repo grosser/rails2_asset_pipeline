@@ -120,8 +120,15 @@ Rails2AssetPipeline.manifest = Rails.root.join("spec/fixtures/empty_manifest.jso
  - asset image helpers for inside css/scss
  - make output location configurable in .setup and use it for manifest location and rake tasks
 
+
+
+
 Author
 ======
+
+### [Contributors](https://github.com/grosser/rails2_asset_pipeline/contributors)
+ - [Michael Peteuil](https://github.com/mpeteuil)
+
 [Michael Grosser](http://grosser.it)<br/>
 michael@grosser.it<br/>
 License: MIT<br/>
