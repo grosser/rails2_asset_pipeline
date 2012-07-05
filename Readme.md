@@ -37,6 +37,16 @@ Just a path: <%= asset_path "application.js" %>
     # config/environment.rb
     config.gem "rails2_asset_pipeline"
 
+    # Gemfile (if you have one)
+    gem "rails2_asset_pipeline"
+
+    group :development do
+      gem "coffee-script", :require => false # need coffee ?
+      gem "sass", :require => false # need sass ?
+      gem "sprockets-sass", :require => false
+    end
+
+
 ### Initializer
 Here you can do configuration of sprockets.
  - loaded in `rake assets:precompile` **without** the rails environment (to enable compiling/deploying without development environment)
@@ -46,8 +56,9 @@ Here you can do configuration of sprockets.
 ```Ruby
 # config/initializers/rails2_asset_pipeline.rb
 if Rails.env.development? # dynamic asset compilation needs these
+  require 'coffee-script' # need coffee ?
   require 'sprockets/sass' # need sass ?
-  autoload :Sass, 'sass' # require if used inside rake tasks <-> require 'sass' takes 0.8s
+  autoload :Sass, 'sass' # load on demand <-> require 'sass' takes 0.8s
   require 'sprockets/source_url' # sprockets-source_url for debugable assets in chrome
 end
 
