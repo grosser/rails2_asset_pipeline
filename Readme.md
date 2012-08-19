@@ -121,6 +121,18 @@ To not compile assets during testing you can overwrite the manifest.
 Rails2AssetPipeline.manifest = Rails.root.join("spec/fixtures/empty_manifest.json")
 ```
 
+### Images vs CSS
+
+    /* application.css */
+    .image_via_sass_url{
+      background: url('ok.gif');
+    }
+
+    /* application.css.erb ... not recommended but possible ... */
+    .image_with_erb{
+      background-image:url(<%= asset_data_uri 'ok.gif' %>);
+    }
+
 ### Sass
  - add `sass` to your gems for sass parsing
  - add `sprockets-sass` to your gems for sass @import support
@@ -128,7 +140,6 @@ Rails2AssetPipeline.manifest = Rails.root.join("spec/fixtures/empty_manifest.jso
 
 # Todo
  - read config from Rails 3 style config.assets
- - asset image helpers for inside css/scss
  - make output location configurable in .setup and use it for manifest location and rake tasks
 
 
