@@ -41,14 +41,16 @@ describe Rails2AssetPipeline do
 
     it "sets up a route for development" do
       Rails.env = "development"
-      instance_exec(&Rails2AssetPipeline.config_ru)
+      result = instance_exec(&Rails2AssetPipeline.config_ru)
       @mapped.should == ["/assets"]
+      (!!result).should == true
     end
 
     it "does not set up a route for production" do
       Rails.env = "production"
-      instance_exec(&Rails2AssetPipeline.config_ru)
+      result = instance_exec(&Rails2AssetPipeline.config_ru)
       @mapped.should == nil
+      (!!result).should == false
     end
   end
 
