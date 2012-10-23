@@ -71,6 +71,17 @@ require 'rails2_asset_pipeline/view_helpers'
 Rails2AssetPipeline::ViewHelpers.ignored_folders = ["images"]
 ```
 
+Optional: remove unnecessary Sass middleware + monkey-patches
+```Ruby
+# config/environment.rb
+...
+
+module Sass; RAILS_LOADED = true; end # prevent sass middleware + monkeypatches -> all handled by rails2_asset_pipeline (verify via: rake middleware | grep Sass)
+
+Rails::Initializer.run do
+...
+```
+
 ### Tasks
 
     # Rakefile
