@@ -58,7 +58,7 @@ Here you can do configuration of sprockets.
 if Rails.env.development? # dynamic asset compilation needs these
   require 'coffee-script' # need coffee ?
   require 'sprockets/sass' # need sass ?
-  autoload :Sass, 'sass' # load on demand <-> require 'sass' takes 0.8s
+  require 'sass' # load for rake tasks, always loaded in rails via sass/init.rb
   require 'sprockets/source_url' # sprockets-source_url for debugable assets in chrome
 end
 
