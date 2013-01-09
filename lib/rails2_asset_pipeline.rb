@@ -5,7 +5,8 @@ module Rails2AssetPipeline
   STATIC_ENVIRONMENTS = ["production", "staging"]
 
   class << self
-    attr_accessor :dynamic_assets_available, :manifest
+    @prefix = 'assets'
+    attr_accessor :dynamic_assets_available, :manifest, :prefix
   end
 
   def self.env

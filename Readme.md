@@ -62,6 +62,9 @@ if Rails.env.development? # dynamic asset compilation needs these
   require 'sprockets/source_url' # sprockets-source_url for debugable assets in chrome
 end
 
+# Use a different path for assets (as in config.assets.prefix from ")
+# Rails2AssetPipeline.prefix = 'static_assets'
+
 Rails2AssetPipeline.setup do |sprockets|
   # ... additional config ...
 end

@@ -23,8 +23,12 @@ module Rails2AssetPipeline
       end
     end
 
+    def assets_prefix
+      Rails2AssetPipeline.prefix
+    end
+
     def rails_asset_id(file)
-      if file.start_with?("/assets/")
+      if file.start_with?("/#{assets_prefix}/")
         nil
       else
         super
@@ -42,7 +46,7 @@ module Rails2AssetPipeline
         data ? "#{asset}?#{data.mtime.to_i}" : "DID_NOT_FIND_#{asset}_IN_ASSETS"
       end
 
-      "/assets/#{asset_with_id}"
+      "/#{assets_prefix}/#{asset_with_id}"
     end
     module_function :asset_path
   end
