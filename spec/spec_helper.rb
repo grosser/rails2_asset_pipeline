@@ -10,6 +10,7 @@ RSpec.configure do |config|
     Rails2AssetPipeline::ViewHelpers.ignored_folders = nil
     Rails2AssetPipeline.class_eval{ @manifest_exists = nil }
     Rails2AssetPipeline.manifest = nil
+    Rails2AssetPipeline.prefix = nil
   end
 end
 
