@@ -48,6 +48,6 @@ module Rails2AssetPipeline
 
       "/#{assets_prefix}/#{asset_with_id}"
     end
-    module_function :asset_path
+    module_function :assets_prefix, :asset_path
   end
 end
