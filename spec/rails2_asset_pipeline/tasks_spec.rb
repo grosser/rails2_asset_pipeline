@@ -33,6 +33,18 @@ describe "Rails2AssetPipeline Tasks" do
       run "rake assets:precompile"
       run("ls public/assets").should == "application-ceff92e831a69f6e164737670664e886.js\nmanifest.json\n"
     end
+
+    context "with a custom prefix" do
+      after do
+        run "rm -rf public/static-assets"
+      end
+
+      it "compiles" do
+        write "config/initializers/rails2_asset_pipeline.rb", "Rails2AssetPipeline.prefix = 'static-assets'"
+        run "rake assets:precompile"
+        run("ls public/static-assets").should == "application-ceff92e831a69f6e164737670664e886.js\nmanifest.json\n"
+      end
+    end
   end
 
   describe "assets:clean" do

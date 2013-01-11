@@ -90,6 +90,16 @@ describe Rails2AssetPipeline::ViewHelpers do
       end
     end
 
+    context "with a custom prefix" do
+      before do
+        Rails2AssetPipeline.prefix = 'static-assets'
+      end
+
+      it "returns a path with digest" do
+        asset_path("xxx.js").should == "/static-assets/xxx.js?123456"
+      end
+    end
+
     context "with no way of resolving assets" do
       before do
         Rails.env = "production"
