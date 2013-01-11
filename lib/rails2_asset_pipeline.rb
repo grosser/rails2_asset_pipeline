@@ -24,10 +24,12 @@ module Rails2AssetPipeline
 
   def self.config_ru(rack)
     unless STATIC_ENVIRONMENTS.include?(Rails.env)
+      prefix = Rails2AssetPipeline.prefix
+
       Rails2AssetPipeline.dynamic_assets_available = true
 
       rack.instance_eval do
-        map "/assets" do
+        map "/#{prefix}" do
           run Rails2AssetPipeline.env
         end
       end

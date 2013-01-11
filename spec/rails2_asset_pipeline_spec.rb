@@ -52,6 +52,12 @@ describe Rails2AssetPipeline do
       @mapped.should == nil
       (!!result).should == false
     end
+
+    it 'respects the prefix' do
+      Rails2AssetPipeline.prefix = 'static-assets'
+      instance_exec(&Rails2AssetPipeline.config_ru)
+      @mapped.should == ["/static-assets"]
+    end
   end
 
   describe ".manifest" do
