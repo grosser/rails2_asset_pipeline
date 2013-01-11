@@ -163,6 +163,7 @@ Author
 
 ### [Contributors](https://github.com/grosser/rails2_asset_pipeline/contributors)
  - [Michael Peteuil](https://github.com/mpeteuil)
+ - [Elia Schito](https://github.com/elia)
 
 [Michael Grosser](http://grosser.it)<br/>
 michael@grosser.it<br/>
