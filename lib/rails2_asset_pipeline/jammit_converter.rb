@@ -2,6 +2,8 @@ require 'yaml'
 
 module Rails2AssetPipeline
   module JammitConverter
+    extend Rake::DSL
+
     def self.convert
       move_to_app
       cleanup_scss
