@@ -53,9 +53,9 @@ describe Rails2AssetPipeline do
       (!!result).should == false
     end
 
-    it 'respects the prefix' do
-      Rails2AssetPipeline.prefix = 'static-assets'
-      instance_exec(&Rails2AssetPipeline.config_ru)
+    it "respects the prefix" do
+      Rails2AssetPipeline.prefix = "static-assets"
+      Rails2AssetPipeline.config_ru(self)
       @mapped.should == ["/static-assets"]
     end
   end
