@@ -19,6 +19,7 @@ describe Rails2AssetPipeline::ViewHelpers do
   let(:env){
     env = {}
     env.stub(:logger).and_return mock()
+    env.stub(:is_a?).with(Sprockets::Base).and_return true
     env
   }
 

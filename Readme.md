@@ -153,13 +153,9 @@ Rails2AssetPipeline.manifest = Rails.root.join("spec/fixtures/empty_manifest.jso
  - add `sass` to your gems for sass parsing
  - add `sprockets-sass` to your gems for sass @import support
 
-
 # Todo
  - read config from Rails 3 style config.assets
- - make output location configurable in .setup and use it for manifest location and rake tasks
-
-
-
+ - sprockets 2.8 wants to use manifest-digest.json, had to overwrite that, find out if nonpstatic manifest makes sense for us and potentially have an option to turn it on
 
 Author
 ======

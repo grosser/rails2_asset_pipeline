@@ -8,6 +8,7 @@ namespace :assets do
       Rake::SprocketsTask.new do |t|
         t.environment = Rails2AssetPipeline.env
         t.output = "./public/#{Rails2AssetPipeline.prefix}"
+        t.manifest = Sprockets::Manifest.new(t.environment.index, "./public/#{Rails2AssetPipeline.prefix}/manifest.json")
         t.assets = t.environment.paths.map{|p| Dir["#{p.sub(Rails.root.to_s,"")}/**/*"] }.flatten
         t.log_level = Logger::ERROR
         t.keep = 2
