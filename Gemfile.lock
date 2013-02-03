@@ -22,11 +22,15 @@ GEM
     rspec-expectations (2.12.1)
       diff-lcs (~> 1.1.3)
     rspec-mocks (2.12.1)
+    sass (3.2.5)
     sprockets (2.8.2)
       hike (~> 1.2)
       multi_json (~> 1.0)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
+    sprockets-sass (0.9.1)
+      sprockets (~> 2.0)
+      tilt (~> 1.1)
     tilt (1.3.3)
 
 PLATFORMS
@@ -38,3 +42,5 @@ DEPENDENCIES
   rails2_asset_pipeline!
   rake
   rspec (~> 2)
+  sass
+  sprockets-sass

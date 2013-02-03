@@ -34,6 +34,23 @@ describe "Rails2AssetPipeline Tasks" do
       run("ls public/assets").should == "application-09565e705ecd8821e8ca69c50e3e2bae.js\nmanifest.json\n"
     end
 
+    context "sass partials" do
+      before do
+        write "app/assets/stylesheets/application.scss", "@import \"_utils.scss\";\nbody{background-color: $blue;}"
+        write "app/assets/stylesheets/_utils.scss", "$blue: #000044;"
+      end
+
+      it "does not compile" do
+        run "rake assets:precompile"
+        run("ls public/assets").should_not include("utils")
+      end
+
+      it "includes them" do
+        run "rake assets:precompile"
+        run("cat public/assets/application-*.css").should == "body {\n  background-color: #000044; }\n"
+      end
+    end
+
     context "with a custom prefix" do
       after do
         run "rm -rf public/static-assets"
