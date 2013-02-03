@@ -13,7 +13,7 @@ namespace :assets do
         end
         t.assets = []
         t.environment.each_logical_path do |logical_path|
-          unless logical_path =~ /.*\/_.*\.css$/ or logical_path =~ /^_.*\.css$/
+          unless logical_path =~ %r{(^|/)_[^/]*.css$}
             if asset = t.environment.find_asset(logical_path)
               t.assets << asset.pathname.to_s
             end
