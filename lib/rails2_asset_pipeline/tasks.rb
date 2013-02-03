@@ -11,14 +11,12 @@ namespace :assets do
         if t.respond_to?(:manifest=) # sprockets 2.8+ ?
           t.manifest = Sprockets::Manifest.new(t.environment.index, "./public/#{Rails2AssetPipeline.prefix}/manifest.json")
         end
-        t.assets = []
-        t.environment.each_logical_path do |logical_path|
-          unless logical_path =~ %r{(^|/)_[^/]*.css$}
-            if asset = t.environment.find_asset(logical_path)
-              t.assets << asset.pathname.to_s
-            end
+        t.assets = t.environment.each_logical_path.map do |logical_path|
+          partial = (logical_path =~ %r{(^|/)_[^/]*.css$})
+          if !partial && asset = t.environment.find_asset(logical_path)
+            asset.pathname.to_s
           end
-        end
+        end.compact
         t.log_level = Logger::ERROR
         t.keep = 2
       end
