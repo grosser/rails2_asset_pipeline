@@ -38,4 +38,8 @@ module Rails
   def self.root
     Pathname.new(File.expand_path("../fake_rails", __FILE__))
   end
+
+  def self.public_path
+    root.join("public")
+  end
 end
