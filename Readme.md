@@ -164,6 +164,7 @@ Author
  - [Michael Peteuil](https://github.com/mpeteuil)
  - [Elia Schito](https://github.com/elia)
  - [Massimo Maino](https://github.com/maintux)
+ - [Sakumatti Luukkonen](https://github.com/sluukkonen)
 
 [Michael Grosser](http://grosser.it)<br/>
 michael@grosser.it<br/>
