@@ -49,7 +49,7 @@ module Rails2AssetPipeline
   end
 
   def self.manifest
-    @manifest ||= "#{Rails.root}/public/assets/manifest.json"
+    @manifest ||= "#{Rails.public_path}/#{self.prefix}/manifest.json"
   end
 
   def self.prefix
