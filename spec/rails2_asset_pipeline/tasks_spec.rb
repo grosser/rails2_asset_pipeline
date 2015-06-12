@@ -31,7 +31,10 @@ describe "Rails2AssetPipeline Tasks" do
   describe "assets:precompile" do
     it "compiles" do
       run "rake assets:precompile"
-      run("ls public/assets").should == "application-09565e705ecd8821e8ca69c50e3e2bae.js\nmanifest.json\n"
+      run("ls public/assets").should ==
+        "application-c49e54dc0015f620c2e86a655368d2d0.js\n" +
+        "application-c49e54dc0015f620c2e86a655368d2d0.js.gz\n" +
+        "manifest.json\n"
     end
 
     context "sass partials" do
@@ -59,7 +62,10 @@ describe "Rails2AssetPipeline Tasks" do
       it "compiles" do
         write "config/initializers/rails2_asset_pipeline.rb", "Rails2AssetPipeline.prefix = 'static-assets'"
         run "rake assets:precompile"
-        run("ls public/static-assets").should == "application-09565e705ecd8821e8ca69c50e3e2bae.js\nmanifest.json\n"
+        run("ls public/static-assets").should ==
+          "application-c49e54dc0015f620c2e86a655368d2d0.js\n" +
+          "application-c49e54dc0015f620c2e86a655368d2d0.js.gz\n" +
+          "manifest.json\n"
       end
     end
   end
@@ -79,7 +85,7 @@ describe "Rails2AssetPipeline Tasks" do
         run "rake assets:precompile"
       end
       run "rake assets:remove_old" # keeps current + 2 older ones = 3
-      run("ls public/assets").scan(/application-/).size.should == 3
+      run("ls public/assets").scan(/application-/).size.should == 6
     end
   end
 
